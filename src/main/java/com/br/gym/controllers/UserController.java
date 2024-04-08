@@ -48,6 +48,11 @@ public class UserController {
         return ResponseEntity.ok(userRepository.save(userModel));
     }
 
+    @GetMapping("/users")
+    public ResponseEntity<Object> getUsers() {
+        return ResponseEntity.ok(userRepository.findAll());
+    }
+
     @GetMapping("/users/{id}")
     public ResponseEntity<Object> getUserById(@PathVariable(value = "id") UUID id) {
         Optional<UserModel> user = userRepository.findById(id);
