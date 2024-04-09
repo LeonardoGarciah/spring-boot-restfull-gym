@@ -6,8 +6,8 @@ import java.util.UUID;
 
 public record CreateTrainingRecordDto(
         @NotNull String name,
-        @NotNull UUID user,
-        String description,
-        UUID[] exercises
+        @NotNull UUID teacher,
+        @NotNull UUID student,
+        String description
 ) {
 }

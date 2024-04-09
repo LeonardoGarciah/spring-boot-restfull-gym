@@ -2,7 +2,9 @@ package com.br.gym.controllers;
 
 import com.br.gym.dtos.training.CreateTrainingRecordDto;
 import com.br.gym.models.TrainingModel;
+import com.br.gym.models.UserModel;
 import com.br.gym.repositories.TrainingRepository;
+import com.br.gym.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +20,19 @@ public class TrainingController {
     @Autowired
     TrainingRepository trainingRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     @PostMapping("/training")
     public ResponseEntity<Object> createTraining(@RequestBody @Valid CreateTrainingRecordDto createTrainingRecordDto) {
         TrainingModel trainingModel = new TrainingModel();
         BeanUtils.copyProperties(createTrainingRecordDto, trainingModel);
+
+        UserModel teacher = userRepository.findById(createTrainingRecordDto.teacher()).get();
+        UserModel student = userRepository.findById(createTrainingRecordDto.student()).get();
+
+        trainingModel.setTeacher(teacher);
+        trainingModel.setStudent(student);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(trainingRepository.save(trainingModel));
     }
@@ -39,6 +50,11 @@ public class TrainingController {
         BeanUtils.copyProperties(createTrainingRecordDto, trainingModel);
 
         return ResponseEntity.ok(trainingRepository.save(trainingModel));
+    }
+
+    @GetMapping("/training")
+    public ResponseEntity<Object> getTrainings() {
+        return ResponseEntity.ok(trainingRepository.findAll());
     }
 
     @GetMapping("/training/{userId}")

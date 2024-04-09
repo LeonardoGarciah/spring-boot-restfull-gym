@@ -21,7 +21,4 @@ public class ExerciseModel implements Serializable {
     private String imagePreview;
     private String description;
     private String videoUrl;
-
-    @OneToMany
-    private Set<TrainingExerciseModel> trainings;
 }

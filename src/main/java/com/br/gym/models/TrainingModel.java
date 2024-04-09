@@ -21,11 +21,10 @@ public class TrainingModel implements Serializable {
     private String description;
 
     @ManyToOne
+    @JoinColumn(name = "student_id")
     private UserModel student;
 
     @ManyToOne
+    @JoinColumn(name = "teacher_id")
     private UserModel teacher;
-
-    @OneToMany
-    private Set<TrainingExerciseModel> exercises;
 }

@@ -42,9 +42,6 @@ public class UserModel implements Serializable, UserDetails {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    @OneToMany
-    private Set<TrainingModel> trainings;
-
     public UserModel(String name, String email, String password, UserRoleEnum userRole) {
         this.email = email;
         this.name = name;

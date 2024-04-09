@@ -21,8 +21,10 @@ public class TrainingExerciseModel implements Serializable {
     private int restTime;
 
     @ManyToOne
+    @JoinColumn(name = "exercise_id")
     private ExerciseModel exercise;
 
     @ManyToOne
+    @JoinColumn(name = "training_id")
     private TrainingModel training;
 }
