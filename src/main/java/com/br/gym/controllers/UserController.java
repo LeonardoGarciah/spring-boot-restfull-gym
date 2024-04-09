@@ -1,6 +1,6 @@
 package com.br.gym.controllers;
 
-import com.br.gym.dtos.UserRecordDto;
+import com.br.gym.dtos.user.UserRecordDto;
 import com.br.gym.models.UserModel;
 import com.br.gym.repositories.UserRepository;
 import jakarta.validation.Valid;

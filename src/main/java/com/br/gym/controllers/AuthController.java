@@ -1,7 +1,7 @@
 package com.br.gym.controllers;
 
-import com.br.gym.dtos.AuthenticationDto;
-import com.br.gym.dtos.RegisterDto;
+import com.br.gym.dtos.auth.AuthenticationRecordDto;
+import com.br.gym.dtos.auth.RegisterDto;
 import com.br.gym.services.AuthorizationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class AuthController {
     AuthorizationService authorizationService;
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody @Valid AuthenticationDto authetinticationDto) {
+    public ResponseEntity<Object> login(@RequestBody @Valid AuthenticationRecordDto authetinticationDto) {
         return authorizationService.login(authetinticationDto);
     }
 

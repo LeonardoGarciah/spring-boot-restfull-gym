@@ -1,4 +1,4 @@
-package com.br.gym.dtos;
+package com.br.gym.dtos.user;
 
 import jakarta.validation.constraints.NotBlank;
 

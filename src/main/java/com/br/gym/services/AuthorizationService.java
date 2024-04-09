@@ -3,9 +3,9 @@ package com.br.gym.services;
 
 import java.sql.Date;
 
-import com.br.gym.dtos.AuthenticationDto;
-import com.br.gym.dtos.LoginResponseDto;
-import com.br.gym.dtos.RegisterDto;
+import com.br.gym.dtos.auth.AuthenticationRecordDto;
+import com.br.gym.dtos.auth.LoginResponseRecordDto;
+import com.br.gym.dtos.auth.RegisterDto;
 import com.br.gym.enums.UserRoleEnum;
 import com.br.gym.models.UserModel;
 import com.br.gym.repositories.UserRepository;
@@ -43,13 +43,13 @@ public class AuthorizationService implements UserDetailsService {
         return userRepository.findByEmail(email);
     }
 
-    public ResponseEntity<Object> login(@RequestBody @Valid AuthenticationDto data) {
+    public ResponseEntity<Object> login(@RequestBody @Valid AuthenticationRecordDto data) {
         authenticationManager = context.getBean(AuthenticationManager.class);
 
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel) auth.getPrincipal());
-        return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseDto(token));
+        return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseRecordDto(token));
     }
 
 
