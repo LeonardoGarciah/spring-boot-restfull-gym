@@ -47,9 +47,14 @@ public class AuthorizationService implements UserDetailsService {
         authenticationManager = context.getBean(AuthenticationManager.class);
 
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
-        var token = tokenService.generateToken((UserModel) auth.getPrincipal());
-        return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseRecordDto(token));
+        try {
+            var auth = this.authenticationManager.authenticate(usernamePassword);
+            var token = tokenService.generateToken((UserModel) auth.getPrincipal());
+
+            return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseRecordDto(token));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Usuário ou senha inválida!");
+        }
     }
 
 
@@ -60,7 +65,7 @@ public class AuthorizationService implements UserDetailsService {
         UserModel newUser = new UserModel(registerDto.name(), registerDto.email(), encryptedPassword, UserRoleEnum.USER);
         newUser.setCreatedAt(new Date(System.currentTimeMillis()));
         this.userRepository.save(newUser);
-        return ResponseEntity.status(HttpStatus.OK).body("User created with sucess!");
+        return ResponseEntity.status(HttpStatus.OK).body("User created with success!");
     }
 }
 

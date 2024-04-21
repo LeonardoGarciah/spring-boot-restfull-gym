@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
@@ -27,8 +28,12 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
 
         if (token != null) {
-            var email = tokenService.validateToken(token);
-            UserDetails user = userRepository.findByEmail(email);
+            var id = tokenService.validateToken(token);
+
+            UserDetails user = null;
+            if (!id.isEmpty()) {
+                user = userRepository.findById(UUID.fromString(id)).orElse(null);
+            }
 
             if (user != null) {
                 var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());

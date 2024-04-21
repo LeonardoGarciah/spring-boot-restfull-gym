@@ -23,6 +23,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         Map<String, List<String>> body = new HashMap<>();
 
+        // show in runner console endpoint, method and status request
+
+
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()

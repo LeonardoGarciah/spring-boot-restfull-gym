@@ -1,5 +1,6 @@
 package com.br.gym.models;
 
+import com.br.gym.dtos.user.UserResponseDto;
 import com.br.gym.enums.UserRoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,16 @@ public class UserModel implements Serializable, UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRoleEnum userRole;
 
+    private String experience;
+
+    private double height;
+
+    private double weight;
+
+    private double yearsOld;
+
+    private boolean firstAccess = true;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
@@ -47,6 +58,10 @@ public class UserModel implements Serializable, UserDetails {
         this.name = name;
         this.password = password;
         this.userRole = userRole;
+    }
+
+    public UserResponseDto convertToUserResponseDto() {
+        return new UserResponseDto(this.id, this.name, this.firstAccess, this.height, this.weight, this.yearsOld, this.experience);
     }
 
     @Override
