@@ -7,6 +7,6 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public record UserResponseDto(
-        UUID id, String name, boolean firstAccess, double height, double weight, double yearsOld,
+        String id, String name, boolean firstAccess, double height, double weight, double yearsOld,
                               String experience) implements Serializable {
 }

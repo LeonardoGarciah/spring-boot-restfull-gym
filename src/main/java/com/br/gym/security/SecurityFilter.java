@@ -32,7 +32,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             UserDetails user = null;
             if (!id.isEmpty()) {
-                user = userRepository.findById(UUID.fromString(id)).orElse(null);
+                user = userRepository.findById(id).orElse(null);
             }
 
             if (user != null) {

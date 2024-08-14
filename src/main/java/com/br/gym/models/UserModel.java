@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,22 +16,20 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "USERS")
+@Document(collection = "user")
 public class UserModel implements Serializable, UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private String _id;
+
     private String name;
 
-    @Column(unique = true)
     private String email;
     private String password;
 
@@ -61,7 +60,7 @@ public class UserModel implements Serializable, UserDetails {
     }
 
     public UserResponseDto convertToUserResponseDto() {
-        return new UserResponseDto(this.id, this.name, this.firstAccess, this.height, this.weight, this.yearsOld, this.experience);
+        return new UserResponseDto(this._id, this.name, this.firstAccess, this.height, this.weight, this.yearsOld, this.experience);
     }
 
     @Override

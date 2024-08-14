@@ -1,11 +1,13 @@
 package com.br.gym.repositories;
 
 import com.br.gym.models.TrainingExerciseModel;
-import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface TrainingExerciseRepository extends JpaRepository<TrainingExerciseModel, UUID> {
+public interface TrainingExerciseRepository extends MongoRepository<TrainingExerciseModel, UUID> {
 }

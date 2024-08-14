@@ -45,7 +45,7 @@ public class UserController {
 
     @PutMapping("/users")
     public ResponseEntity<Object> updateUser(@RequestHeader(name = "Authorization") String token, @RequestBody @Valid UpdateUserRecordDto updateUserRecordDto) {
-        final UUID id = UUID.fromString(tokenService.validateToken(token));
+        final String id = tokenService.validateToken(token);
 
         Optional<UserModel> user = userRepository.findById(id);
 
@@ -77,7 +77,7 @@ public class UserController {
 
     @GetMapping("/users/infos")
     public ResponseEntity<Object> getUsersInfos(@RequestHeader(name = "Authorization") String token) {
-        final UUID id = UUID.fromString(tokenService.validateToken(token));
+        final String id = tokenService.validateToken(token);
 
         Optional<UserModel> user = userRepository.findById(id);
 
@@ -91,7 +91,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<Object> getUserById(@PathVariable(value = "id") UUID id) {
+    public ResponseEntity<Object> getUserById(@PathVariable(value = "id") String id) {
         Optional<UserModel> user = userRepository.findById(id);
 
         UserResponseDto userResponseDto = user.map(UserModel::convertToUserResponseDto).orElse(null);

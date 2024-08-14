@@ -3,19 +3,18 @@ package com.br.gym.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
-@Entity
-@Table(name = "EXERCISES")
 @Getter
 @Setter
+@Document(collection = "exercise")
 public class ExerciseModel implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private String _id;
 
     private String name;
     private String imagePreview;
