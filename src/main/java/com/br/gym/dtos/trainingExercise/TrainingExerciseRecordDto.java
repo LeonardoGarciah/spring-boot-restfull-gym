@@ -9,7 +9,6 @@ public record TrainingExerciseRecordDto(
         @NotNull int repetitions,
         Double weight,
         @NotNull int restTime,
-        @NotNull UUID exercise,
-        @NotNull UUID training
+        @NotNull String exercise
 ) {
 }

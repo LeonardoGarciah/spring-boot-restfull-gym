@@ -27,7 +27,7 @@ public class ExerciseController {
     }
 
     @PutMapping("/exercise/{id}")
-    public ResponseEntity<Object> updateExercise(@PathVariable(value = "id") UUID id, @RequestBody @Valid CreateExerciseRecordDto createExerciseRecordDto) {
+    public ResponseEntity<Object> updateExercise(@PathVariable(value = "id") String id, @RequestBody @Valid CreateExerciseRecordDto createExerciseRecordDto) {
         var exercise = exerciseRepository.findById(id);
 
         if (exercise.isEmpty()) {

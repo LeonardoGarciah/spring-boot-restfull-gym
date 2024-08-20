@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -28,17 +29,21 @@ public class TrainingController {
         TrainingModel trainingModel = new TrainingModel();
         BeanUtils.copyProperties(createTrainingRecordDto, trainingModel);
 
-        UserModel teacher = userRepository.findById(createTrainingRecordDto.teacher()).get();
-        UserModel student = userRepository.findById(createTrainingRecordDto.student()).get();
+        Optional<UserModel> teacher = userRepository.findById(createTrainingRecordDto.teacherId());
+        Optional<UserModel> student = userRepository.findById(createTrainingRecordDto.studentId());
 
-        trainingModel.setTeacher(teacher);
-        trainingModel.setStudent(student);
+        if (teacher.isEmpty() || student.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Teacher or student not found.");
+        }
+
+        trainingModel.setTeacherId(teacher.get().get_id());
+        trainingModel.setStudentId(student.get().get_id());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(trainingRepository.save(trainingModel));
     }
 
     @PutMapping("/training/{id}")
-    public ResponseEntity<Object> updateTraining(@PathVariable(value = "id") UUID id, @RequestBody @Valid CreateTrainingRecordDto createTrainingRecordDto) {
+    public ResponseEntity<Object> updateTraining(@PathVariable(value = "id") String id, @RequestBody @Valid CreateTrainingRecordDto createTrainingRecordDto) {
         var training = trainingRepository.findById(id);
 
         if (training.isEmpty()) {
@@ -58,7 +63,7 @@ public class TrainingController {
     }
 
     @GetMapping("/training/{userId}")
-    public ResponseEntity<Object> getTrainings(@PathVariable(value = "userId") UUID userId) {
+    public ResponseEntity<Object> getTrainings(@PathVariable(value = "userId") String userId) {
         return ResponseEntity.ok(trainingRepository.findById(userId));
     }
 }

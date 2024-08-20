@@ -2,7 +2,6 @@ package com.br.gym.models;
 
 import com.br.gym.dtos.user.UserResponseDto;
 import com.br.gym.enums.UserRoleEnum;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +24,6 @@ public class UserModel implements Serializable, UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Id
     private String _id;
 
     private String name;
@@ -33,7 +31,6 @@ public class UserModel implements Serializable, UserDetails {
     private String email;
     private String password;
 
-    @Enumerated(EnumType.STRING)
     private UserRoleEnum userRole;
 
     private String experience;
@@ -46,10 +43,8 @@ public class UserModel implements Serializable, UserDetails {
 
     private boolean firstAccess = true;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
     public UserModel(String name, String email, String password, UserRoleEnum userRole) {

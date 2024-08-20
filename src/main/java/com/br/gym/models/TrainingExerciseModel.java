@@ -1,6 +1,5 @@
 package com.br.gym.models;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +11,6 @@ import java.util.UUID;
 @Setter
 @Document(collection = "training-exercise")
 public class TrainingExerciseModel implements Serializable {
-    @Id
     private String _id;
 
     private int series;
@@ -21,6 +19,4 @@ public class TrainingExerciseModel implements Serializable {
     private int restTime;
 
     private ExerciseModel exercise;
-
-    private TrainingModel training;
 }

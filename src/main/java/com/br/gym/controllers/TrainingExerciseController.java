@@ -1,6 +1,7 @@
 package com.br.gym.controllers;
 
 import com.br.gym.dtos.trainingExercise.TrainingExerciseRecordDto;
+import com.br.gym.models.ExerciseModel;
 import com.br.gym.models.TrainingExerciseModel;
 import com.br.gym.repositories.ExerciseRepository;
 import com.br.gym.repositories.TrainingExerciseRepository;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 public class TrainingExerciseController {
@@ -32,8 +35,13 @@ public class TrainingExerciseController {
         TrainingExerciseModel trainingExerciseModel = new TrainingExerciseModel();
         BeanUtils.copyProperties(trainingExerciseRecordDto, trainingExerciseModel);
 
-        trainingExerciseModel.setTraining(trainingRepository.findById(trainingExerciseRecordDto.training()).get());
-        trainingExerciseModel.setExercise(exerciseRepository.findById(trainingExerciseRecordDto.exercise()).get());
+        Optional<ExerciseModel> exercise = exerciseRepository.findById(trainingExerciseRecordDto.exercise());
+
+        if (exercise.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exercise not found.");
+        }
+
+        trainingExerciseModel.setExercise(exercise.get());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(trainingExerciseRepository.save(trainingExerciseModel));
     }

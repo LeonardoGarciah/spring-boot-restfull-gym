@@ -62,7 +62,7 @@ public class AuthorizationService implements UserDetailsService {
         if (this.userRepository.findByEmail(registerDto.email()) != null) return ResponseEntity.badRequest().build();
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerDto.password());
 
-        UserModel newUser = new UserModel(registerDto.name(), registerDto.email(), encryptedPassword, UserRoleEnum.USER);
+        UserModel newUser = new UserModel(registerDto.name(), registerDto.email(), encryptedPassword, UserRoleEnum.STUDENT);
         newUser.setCreatedAt(new Date(System.currentTimeMillis()));
         this.userRepository.save(newUser);
         return ResponseEntity.status(HttpStatus.OK).body("User created with success!");
